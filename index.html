@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnuragVerse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #00ff88;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    video#bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.25;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      text-align: center;
+      padding: 25px 15px 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00ff88, #00cfff, #00ff88);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      position: relative;
+      transition: 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #00ff88;
+      left: 0;
+      bottom: -4px;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 30px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .text-section {
+      flex: 1;
+      min-width: 280px;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .text-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animated-title {
+      font-size: 44px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00ff88, #00ffaa, #00ff88);
+      background-size: 200% auto;
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: shine 3s linear infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes shine {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .text-section p {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .connect-btn {
+      margin-top: 20px;
+      padding: 12px 28px;
+      background-color: #00ff88;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .connect-btn:hover {
+      background-color: #00cc6a;
+    }
+
+    .image-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .image-section::before {
+      content: '';
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.3), transparent 70%);
+      filter: blur(30px);
+      z-index: 0;
+    }
+
+    .image-section img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 60px #00ff88;
+      border: 2px solid #00ff88;
+      transition: transform 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .image-section img:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .section {
+      padding: 80px 20px;
+      margin: 60px auto;
+      width: 90%;
+      max-width: 1000px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+      transition: all 0.6s ease;
+      opacity: 0.3;
+      transform: scale(0.9);
+      text-align: center;
+    }
+
+    .section.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .section h2 {
+      color: #00ff88;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .section p, .section ul {
+      color: #ccc;
+      font-size: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .section ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .main {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .image-section {
+        order: -1;
+        margin-bottom: 25px;
+      }
+
+      .animated-title {
+        font-size: 32px;
+      }
+
+      .section {
+        padding: 50px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bgVideo">
+    <source src="assets/bgd.mp4" type="video/mp4">
+  </video>
+
+  <header>
+    <div class="logo">AnuragVerse</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="main" id="home">
+    <div class="text-section" id="introText">
+      <h1 class="animated-title">Full-Stack Developer</h1>
+      <p>Crafting the intersection of software architecture and cyber defense.</p>
+      <p>Currently exploring simulation theory, ethical hacking, and building scalable systems.</p>
+      <button class="connect-btn">Let's Connect</button>
+    </div>
+    <div class="image-section">
+      <img src="assets/anu.jpg" alt="Anurag Image">
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <h2>Cyber Arsenal</h2>
+    <ul>
+      <li><strong>Frontend:</strong> React, Tailwind, JavaScript, GSAP for animations</li>
+      <li><strong>Backend:</strong> Node.js, Express, MongoDB, REST APIs</li>
+      <li><strong>Hacking Suite:</strong> Payload development, Kali Linux, Metasploit, Wireshark</li>
+      <li><strong>Cyber Defense:</strong> Traffic analysis, Firewall evasion, Reverse engineering basics</li>
+      <li><strong>Design Arsenal:</strong> Figma prototyping, responsive UX/UI systems</li>
+    </ul>
+  </section>
+
+  <section class="section" id="projects">
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>Pixel Runner:</strong> A stylized endless game in vanilla JS</li>
+      <li><strong>Dark Web Toolkit:</strong> CLI tool for OSINT & pentesting ops</li>
+      <li><strong>Prompt Engine:</strong> AI-powered TTS/image utility</li>
+      <li><strong>Static Framework:</strong> Mini JavaScript-based site builder</li>
+    </ul>
+  </section>
+
+  <section class="section" id="contact">
+    <h2>Contact</h2>
+    <p>
+      Open for collaboration, freelance gigs, or just nerd talk.<br>
+      Ping me if you're building something wild.
+    </p>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(document.getElementById("introText"));
+
+    const sections = document.querySelectorAll(".section");
+    const focusObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sections.forEach(sec => sec.classList.remove("active"));
+          entry.target.classList.add("active");
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(section => focusObserver.observe(section));
+  </script>
+</body>
+</html>
